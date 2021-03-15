@@ -10,7 +10,7 @@ close all
 clc
 
 %Esercizio 1 - Cross-correlazione 2D normalizzata per trovare difetti su tessuti
-B= rgb2gray(imread('immagini/i8.jpg'));
+B= rgb2gray(imread('i11.jpg'));
 [R,C]=size(B);
 
 %Aumento contrasto con imadjust con stretchlim che imposta automaticamente
@@ -127,11 +127,11 @@ c8 = normxcorr2(pattern8,A);
 c = (c1+c2+c3+c4)/4; % calcolo media (537x537)
 [altezza, larghezza]=size(c);
 scarto = (altezza-500)/2;
-scarto = uint8(scarto);
-c = c(scarto:(end-scarto),scarto:(end-scarto)); % vale solo per dim = 26
+scarto = cast(scarto,'int32');
+c = c(scarto:(end-scarto),scarto:(end-scarto));
 figure, surf(abs(c)), shading flat
 figure, imagesc(abs(c)), colorbar
-c=abs(c);
+c = abs(c);
 
 % Graythreshold
 lv = graythresh(c);
@@ -164,7 +164,7 @@ figure, imagesc(mask2);
 % using the same structuring element for both operations.
 % Morphological opening is useful for removing small objects from an image
 % while preserving the shape and size of larger objects in the image.
-
+%{
 A=A(6:end-7,6:end-7); % Passo da 512x512 a 500x500
 A1 = A;
 A1(mask2)=255;
